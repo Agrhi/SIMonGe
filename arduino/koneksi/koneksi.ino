@@ -14,8 +14,8 @@ float busvoltage = 0;
 float current = 0;
 
 //Setting WiFi
-const char* ssid = "proaction"; //Name of SSID or WiFi
-const char* pass = "aqilrainaaidan123";        //Password of WiFi
+const char* ssid = "namawifi"; //Nama WiFi
+const char* pass = "passwifi";        //Password WiFi
 
 void setup() {
   Serial.begin(115200);
@@ -25,7 +25,7 @@ void setup() {
   Serial.print("Connecting to :  ");
   Serial.println(ssid);
   WiFi.begin(ssid,pass);
-  //Try To Connecting to WiFi
+  //Koneksi Wifi
   while (WiFi.status() != WL_CONNECTED){
     delay(1000);
     Serial.println(".");
@@ -39,23 +39,29 @@ void loop() {
   currentMillis = millis();
   
   //Read Voltage and Current from Sensor
-  busvoltage = ina219.busVoltage();
-  current = ina219.shuntCurrent();
+  suhu = ina219.suhu();
+  kelembaban = ina219.kelembaban();
+  getaran = ina219.getaran();
   
-  //Display Value of Voltage and Current from Sensor
-  Serial.print("Bus Voltage:   "); Serial.print(busvoltage,2); Serial.println(" V");
-  Serial.print("Current:       "); Serial.print(current,4); Serial.println(" mA");
+//  busvoltage = ina219.busVoltage();
+//  current = ina219.shuntCurrent();
+  
+  //Tampilkan Nilai dari sensor
+  Serial.print("Suhu:   "); Serial.print(suhu,2); Serial.println(" C");
+  Serial.print("Kelembaban:       "); Serial.print(kelembaban,4); Serial.println(" F");
+  Serial.print("Getaran:       "); Serial.print(getaran,4); Serial.println(" SR");
   Serial.println("======================================");
   delay(2000);
 
   //Send Data if Millis reach Interval
-  if(currentMillis - previousMillis > interval){
+//  if(currentMillis - previousMillis > interval){
+    if((suhu == 0) && (kelembaban == 0) && (getaran == 0)){
     HTTPClient http;
     String postData;
-    postData = "volt="+String(busvoltage)+"&curr="+String(current,4); 
+    postData = "suhu="+String(suhu)+"&kelembaban="+String(kelembaban,4)+"&getaran="+String(getaran,4); 
     //IP for Access Database Server
     //InsertDB is File php to Save/Insert Data to Database (PHPMySQL)
-    http.begin("http://192.168.1.8/ESP32-INA219/InsertDB.php");
+    http.begin("http://192.168.43.16/SIMonGe/InsertDB.php");
     http.addHeader("Content-Type", "application/x-www-form-urlencoded");
     int httpCode = http.POST(postData); //Send the request
     String payload = http.getString();  //Get the response payload
