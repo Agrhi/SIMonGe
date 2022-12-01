@@ -78,12 +78,7 @@
                 <div class="card bg-light mb-3">
                     <div class="card-header"><i class="bi bi-thermometer-half"></i> Suhu</div>
                     <div class="card-body text-center">
-                        <!-- <div class="row">
-                                <div class="col-md-2"></div>
-                                <div class="col-md-6 hitung">100</div>
-                                <div class="col-md-4 satuan"><b>°C</b></div>
-                            </div> -->
-                        <div class="hitung">100 °C</div>
+                        <div class="hitung"><?= $suhu ?> °C</div>
                     </div>
                 </div>
             </div>
@@ -91,7 +86,7 @@
                 <div class="card bg-light mb-3">
                     <div class="card-header"><i class="bi bi-thermometer-snow"></i> Kelembaban</div>
                     <div class="card-body text-center">
-                        <div class="hitung">100 °F</div>
+                        <div class="hitung"><?= $kelembaban ?> °F</div>
                     </div>
                 </div>
             </div>
@@ -99,7 +94,7 @@
                 <div class="card bg-light mb-3">
                     <div class="card-header"><i class="bi bi-activity"></i> Getaran</div>
                     <div class="card-body text-center">
-                        <div class="hitung">100 SR</div>
+                        <div class="hitung"><?= $getaran ?> SR</div>
                     </div>
                 </div>
             </div>
