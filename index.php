@@ -56,10 +56,19 @@
 
         <!-- Koneksi database mengambil data terkhir masuk -->
         <?php
-        include 'koneksi.php';
-        // Pakai ini kalau data output PLTB (85 data) data terakhir
-        $data = mysqli_query($con, "SELECT * FROM `log` ORDER BY id DESC LIMIT 1;");
-        $new = mysqli_fetch_row($data); ?>
+            if isset($_SESSION['data']){
+                $suhu = $data['suhu'];
+                $kelembaban = $data['kelembaban'];
+                $getaran = $data['getaran'];
+            } else {
+                include 'koneksi.php';
+                $data = mysqli_query($con, "SELECT * FROM `log` ORDER BY id DESC LIMIT 1;");
+                $new = mysqli_fetch_row($data);
+                $suhu = $new[3];
+                $suhu = $new[4];
+                $suhu = $new[5];
+            }
+        ?>
 
 
         <div class="row mb-4">
