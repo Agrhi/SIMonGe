@@ -13,6 +13,12 @@
         $g   = $_POST['getaran'];
         $sql = "INSERT INTO log (tgl, wkt, suhu, kelembaban, getaran) VALUES ('".$d."','".$t."','".$s."','".$k."','".$g."')";
         mysqli_query($con,$sql);
+        $SESSION['data'] = [
+            'suhu' => $s,
+            'kelembaban' => $k,
+            'getaran' => $g
+        ];
+        document.location.href = 'index.php';
     }
     else{
         echo "Data Kosong!!";
