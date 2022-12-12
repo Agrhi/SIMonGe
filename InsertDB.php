@@ -6,19 +6,26 @@
     $d = date("Y-m-d");
     $t = date("H:i:s");
 
-    if(!empty($_POST['suhu']) && !empty($_POST['kelembaban']) && !empty($_POST['getaran']))
+    $coba = 1;
+    // if(!empty($_POST['suhu']) && !empty($_POST['kelembaban']) && !empty($_POST['getaran']))
+    if ($coba == 1)
     {
-        $s   = $_POST['suhu'];
-        $k   = $_POST['kelembaban'];
-        $g   = $_POST['getaran'];
+        $s   = '38';
+        $k   = '30';
+        $g   = '9.4';
+        // $s   = $_POST['suhu'];
+        // $k   = $_POST['kelembaban'];
+        // $g   = $_POST['getaran'];
         $sql = "INSERT INTO log (tgl, wkt, suhu, kelembaban, getaran) VALUES ('".$d."','".$t."','".$s."','".$k."','".$g."')";
         mysqli_query($con,$sql);
-        $SESSION['data'] = [
-            'suhu' => $s,
-            'kelembaban' => $k,
-            'getaran' => $g
-        ];
-        document.location.href = 'index.php';
+        session_start();
+        unset($_SESSION['suhu']);
+        unset($_SESSION['kelembaban']);
+        unset($_SESSION['getaran']);
+        $_SESSION['suhu'] = $s;
+        $_SESSION['kelembaban'] = $k;
+        $_SESSION['getaran'] = $g;
+        header("location:index.php");
     }
     else{
         echo "Data Kosong!!";

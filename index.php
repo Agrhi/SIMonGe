@@ -56,18 +56,22 @@
 
         <!-- Koneksi database mengambil data terkhir masuk -->
         <?php
-            if isset($_SESSION['data']){
-                $suhu = $data['suhu'];
-                $kelembaban = $data['kelembaban'];
-                $getaran = $data['getaran'];
-            } else {
-                include 'koneksi.php';
-                $data = mysqli_query($con, "SELECT * FROM `log` ORDER BY id DESC LIMIT 1;");
-                $new = mysqli_fetch_row($data);
-                $suhu = $new[3];
-                $suhu = $new[4];
-                $suhu = $new[5];
-            }
+        session_start();
+        if (isset($_SESSION['suhu'])) {
+            $suhu = $_SESSION['suhu'];
+            $kelembaban = $_SESSION['kelembaban'];
+            $getaran = $_SESSION['getaran'];
+            // echo '<script>
+            //     play_sound();
+            // </script>';
+        } else {
+            include 'koneksi.php';
+            $data = mysqli_query($con, "SELECT * FROM `log` ORDER BY id DESC LIMIT 1;");
+            $new = mysqli_fetch_row($data);
+            $suhu = $new[3];
+            $kelembaban = $new[4];
+            $getaran = $new[5];
+        }
         ?>
 
 
@@ -140,6 +144,8 @@
         </div>
     </div>
 
+    <button onclick="play_sound()"></button>
+
     <!-- Footer -->
     <!-- <nav class="navbar navbar-dark bg-primary">
         <div class="container" style="justify-content: center;">
@@ -169,7 +175,17 @@
 <script>
     $(document).ready(function() {
         $('#myTable').DataTable();
+
+        if ((<?= isset($_SESSION['suhu']) ?>)) {
+            var bel = new Audio('https://www.meramukoding.com/wp-content/uploads/2020/05/doorbell.mp3');
+            bel.play();
+        }
     });
+
+    function play_sound() {
+        var bel = new Audio('https://www.meramukoding.com/wp-content/uploads/2020/05/doorbell.mp3');
+        bel.play();
+    }
 </script>
 
 </html>
