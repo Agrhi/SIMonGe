@@ -61,9 +61,10 @@
             $suhu = $_SESSION['suhu'];
             $kelembaban = $_SESSION['kelembaban'];
             $getaran = $_SESSION['getaran'];
-            // echo '<script>
-            //     play_sound();
-            // </script>';
+            echo '<script>
+                datamasuk();
+                play_sound();
+            </script>';
         } else {
             include 'koneksi.php';
             $data = mysqli_query($con, "SELECT * FROM `log` ORDER BY id DESC LIMIT 1;");
@@ -147,20 +148,6 @@
     <button onclick="play_sound()"></button>
 
     <!-- Footer -->
-    <!-- <nav class="navbar navbar-dark bg-primary">
-        <div class="container" style="justify-content: center;">
-            <div class="row" style="text-align: center;">
-                <div class="col-md-6">
-                    <h5>Teknik Informatika</h5>
-                    <h2>Universitas Tadulako</h2>
-                </div>
-                <div class="col-md-6">
-                    <h5>ProAction</h5>
-                    <h2>Lembaga Robotika</h2>
-                </div>
-            </div>
-        </div>
-    </nav> -->
     <nav class="navbar navbar-dark bg-primary mt-1">
         <div class="container">
             <p class="text-center">
@@ -170,17 +157,35 @@
             </p>
         </div>
     </nav>
+    <!-- Modal -->
+    <div class="modal fade" id="datamasuk" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Warning</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Telah terjadi Gempa dengan Getaran 3.5 Sr.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <!-- <button type="button" class="btn btn-primary">OKe</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 <script>
     $(document).ready(function() {
         $('#myTable').DataTable();
-
-        if ((<?= isset($_SESSION['suhu']) ?>)) {
-            var bel = new Audio('https://www.meramukoding.com/wp-content/uploads/2020/05/doorbell.mp3');
-            bel.play();
-        }
+        $('#datamasuk').modal('show');
     });
+    
+    function datamasuk() {
+        $('#datamasuk').modal('show');
+    }
 
     function play_sound() {
         var bel = new Audio('https://www.meramukoding.com/wp-content/uploads/2020/05/doorbell.mp3');

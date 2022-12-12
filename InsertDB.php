@@ -12,7 +12,7 @@
     {
         $s   = '38';
         $k   = '30';
-        $g   = '9.4';
+        $g   = '8.4';
         // $s   = $_POST['suhu'];
         // $k   = $_POST['kelembaban'];
         // $g   = $_POST['getaran'];
